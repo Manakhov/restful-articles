@@ -11,7 +11,7 @@ class ArticlesListSerializer(serializers.ModelSerializer):
 
 class ArticleDetailSerializer(serializers.ModelSerializer):
     """Serializer for one article"""
-    author = serializers.HiddenField(default=serializers.CurrentUserDefault)
+    author = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
     class Meta:
         model = Article
