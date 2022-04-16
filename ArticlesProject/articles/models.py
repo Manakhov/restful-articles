@@ -4,6 +4,7 @@ User = get_user_model()
 
 
 class Article(models.Model):
+    """Article model"""
     title = models.CharField(verbose_name='Заголовок', unique=True, max_length=64)
     body = models.TextField(verbose_name='Тело')
     article_types = (

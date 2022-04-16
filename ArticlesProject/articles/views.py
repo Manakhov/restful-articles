@@ -5,9 +5,11 @@ from .models import Article
 
 
 class ArticleCreateView(generics.CreateAPIView):
+    """View for article creation"""
     serializer_class = ArticleDetailSerializer
 
 
 class ArticlesListView(generics.ListAPIView):
+    """View for article list getting"""
     serializer_class = ArticlesListSerializer
     queryset = Article.objects.all()
