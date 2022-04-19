@@ -2,17 +2,8 @@ from rest_framework import serializers
 from .models import Article
 
 
-class ArticlesListSerializer(serializers.ModelSerializer):
-    """Serializer for articles list"""
-    author = serializers.CharField()
-
-    class Meta:
-        model = Article
-        fields = ('id', 'title', 'author')
-
-
-class ArticleDetailSerializer(serializers.ModelSerializer):
-    """Serializer for one article"""
+class ArticleSerializer(serializers.ModelSerializer):
+    """Serializer for an article"""
     author = serializers.HiddenField(default=serializers.CurrentUserDefault())
     author_name = serializers.CharField(read_only=True, source='author')
 
