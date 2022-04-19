@@ -5,7 +5,7 @@ from .models import Article
 class ArticleSerializer(serializers.ModelSerializer):
     """Serializer for an article"""
     author = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    author_name = serializers.CharField(read_only=True, source='author')
+    author_email = serializers.CharField(read_only=True, source='author')
 
     class Meta:
         model = Article
