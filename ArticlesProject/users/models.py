@@ -5,16 +5,17 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 class MyUserManager(BaseUserManager):
     """Custom user manager model"""
 
-    def create_user(self, email, role, password=None, **extra_fields):
-        user = self.model(email=email, role=role, **extra_fields)
+    def create_user(self, email, role, password=None):
+        user = self.model(email=email, role=role)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, email, role, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        user = self.create_user(email=email, role=role, password=password, **extra_fields)
+    def create_superuser(self, email, role, password=None):
+        user = self.create_user(email=email, role=role, password=password)
+        user.is_staff = True
+        user.us_superuser = True
+        user.save()
         return user
 
 
@@ -30,10 +31,10 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
+    objects = MyUserManager()
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['role']
-
-    objects = MyUserManager()
 
     def __str__(self):
         return self.email
