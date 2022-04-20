@@ -17,3 +17,11 @@ class IsAuthorOrReadOnly(permissions.BasePermission):
         elif request.user.id is None:
             return False
         return request.user.role == 2
+
+
+class IsPublicArticleAndAnonymUser(permissions.BasePermission):
+    """Returns False if the article is close and the user is anonymous"""
+    def has_object_permission(self, request, view, obj):
+        if request.user.id is None and obj.type == 2:
+            return False
+        return True

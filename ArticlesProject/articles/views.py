@@ -1,7 +1,7 @@
 from rest_framework import generics
 from .serializers import ArticleSerializer
 from .models import Article
-from .permissions import IsOwnerOrReadOnly, IsAuthorOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAuthorOrReadOnly, IsPublicArticleAndAnonymUser
 
 
 class ArticleListCreateView(generics.ListCreateAPIView):
@@ -20,4 +20,4 @@ class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
     """View for article getting, updating, deleting"""
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-    permission_classes = (IsOwnerOrReadOnly, )
+    permission_classes = (IsOwnerOrReadOnly, IsPublicArticleAndAnonymUser,)
