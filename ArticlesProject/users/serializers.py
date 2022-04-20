@@ -15,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Пароль должен содержать хотя бы одну цифру.")
         elif not bool(re.search(r'[a-zA-Z]', password)):
             raise serializers.ValidationError("Пароль должен содержать хотя бы одну букву любого регистра.")
+        return password
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
