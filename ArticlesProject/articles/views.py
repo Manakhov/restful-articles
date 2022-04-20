@@ -7,8 +7,13 @@ from .permissions import IsOwnerOrReadOnly, IsAuthorOrReadOnly
 class ArticleListCreateView(generics.ListCreateAPIView):
     """View for article list getting or article creating"""
     serializer_class = ArticleSerializer
-    queryset = Article.objects.all()
     permission_classes = (IsAuthorOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.id is None:
+            return Article.objects.filter(type=1)
+        return Article.objects.all()
 
 
 class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):
