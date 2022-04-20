@@ -1,14 +1,14 @@
 from rest_framework import generics
 from .serializers import ArticleSerializer
 from .models import Article
-from .permissions import IsOwnerOrReadOnly, IsAdminOrReadOnly
+from .permissions import IsOwnerOrReadOnly, IsAuthorOrReadOnly
 
 
 class ArticleListCreateView(generics.ListCreateAPIView):
     """View for article list getting or article creating"""
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-    permission_classes = (IsAdminOrReadOnly, )
+    permission_classes = (IsAuthorOrReadOnly,)
 
 
 class ArticleDetailView(generics.RetrieveUpdateDestroyAPIView):

@@ -9,9 +9,11 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.author == request.user
 
 
-class IsAdminOrReadOnly(permissions.BasePermission):
-    """Returns True if the method is safe or the user is an admin"""
+class IsAuthorOrReadOnly(permissions.BasePermission):
+    """Returns True if the method is safe or the user is an author"""
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return bool(request.user and request.user.is_staff)
+        elif request.user.id is None:
+            return False
+        return request.user.role == 2
