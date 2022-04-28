@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mhvbf3!!^s5n_ozfu54n^g0fuslq#ob14c%_30!pano-^cy%%5'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'ArticlesProject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd8d71782gbv3q1',
-        'USER': 'cvzwmgirqbwvcj',
-        'PASSWORD': '6f51f1b6e0e158ac5ee356fefa40142948ea435b29aa6d71f4852e762a888521',
-        'HOST': 'ec2-23-20-224-166.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'NAME': os.getenv('DATABASES_NAME'),
+        'USER': os.getenv('DATABASES_USER'),
+        'PASSWORD': os.getenv('DATABASES_PASSWORD'),
+        'HOST': os.getenv('DATABASES_HOST'),
+        'PORT': os.getenv('DATABASES_PORT'),
     }
 }
 
