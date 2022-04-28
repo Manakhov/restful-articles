@@ -1,5 +1,6 @@
-import re
 from rest_framework import serializers
+from django.core import exceptions
+from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -9,12 +10,10 @@ class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     def validate_password(self, password):
-        if len(password) < 8:
-            raise serializers.ValidationError("Пароль должен быть не короче 8 символов.")
-        elif not bool(re.search(r'\d', password)):
-            raise serializers.ValidationError("Пароль должен содержать хотя бы одну цифру.")
-        elif not bool(re.search(r'[a-zA-Z]', password)):
-            raise serializers.ValidationError("Пароль должен содержать хотя бы одну букву любого регистра.")
+        try:
+            validate_password(password)
+        except exceptions.ValidationError as e:
+            raise serializers.ValidationError(e.messages)
         return password
 
     def create(self, validated_data):
